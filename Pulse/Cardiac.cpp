@@ -11,7 +11,7 @@
 Cardiac::Cardiac()
 {	
 	bufferThresh = 50;
-	filtered = std::vector<float>(0);
+	filtered = std::vector<float>();
 }
 
 void Cardiac::Execute(std::vector<float> &freqsIn, Mat &fftIn, 

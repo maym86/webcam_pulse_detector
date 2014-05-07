@@ -6,6 +6,7 @@
 #include "stdafx.h"
 #include "Pulse.h"
 
+using namespace std;
 using namespace cv;
 
 std::vector<float> filtered;
@@ -15,12 +16,14 @@ std::vector<float> mag;
 
 DWORD WINAPI RunGraphs( LPVOID lpParam ) 
 {
-
 	while(true)
 	{
-		showFloatGraph("Pulse", &filtered[0], filtered.size(),1,0,0,0,425);
-		showFloatGraph("Samples", &samples[0], samples.size(),1,0,0,0,425);
-		showFloatGraph("FFT Magnitude", &mag[0], mag.size(),1,0,0,0,425);
+		if(filtered.size() > 0)
+			showFloatGraph("Pulse", &filtered[0], filtered.size(),1,0,0,0,425);
+		if(samples.size() > 0)
+			showFloatGraph("Samples", &samples[0], samples.size(),1,0,0,0,425);
+		if(mag.size() > 0)
+			showFloatGraph("FFT Magnitude", &mag[0], mag.size(),1,0,0,0,425);
 	}
 	return 0;
 

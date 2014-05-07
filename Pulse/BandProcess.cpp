@@ -86,7 +86,7 @@ void BandProcess::Execute()
 		}		 
 	 }
 
-	 //for display invert fft
+	 //for display inverse fft
 	 if(make_filtered)
 	 {
 		if(fft_out.rows > 2)
@@ -139,7 +139,7 @@ void BandProcess::Execute()
 		peak_hz = freqs[maxIdx];
 		
 		Mat phaseArray;
-		//temp using 2d phase calculation
+		//2d phase calculation
 		cv::phase(planes[0], planes[1], phaseArray);
 		phase = phaseArray.at<float>(maxIdx,0);
 	 }
