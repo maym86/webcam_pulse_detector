@@ -9,7 +9,7 @@
 
 #include <opencv2\opencv.hpp>
 #include "DetectPulse.h"
-
+#include <thread>
 
 
 #endif

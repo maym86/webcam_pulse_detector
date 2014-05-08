@@ -6,6 +6,7 @@
 #include "stdafx.h"
 #include "Pulse.h"
 
+
 using namespace std;
 using namespace cv;
 
@@ -14,7 +15,7 @@ std::vector<float> samples;
 std::vector<float> mag;
 
 
-DWORD WINAPI RunGraphs( LPVOID lpParam ) 
+int RunGraphs() 
 {
 	while(true)
 	{
@@ -26,7 +27,6 @@ DWORD WINAPI RunGraphs( LPVOID lpParam )
 			showFloatGraph("FFT Magnitude", &mag[0], mag.size(),1,0,0,0,425);
 	}
 	return 0;
-
 }
 
 
@@ -87,7 +87,7 @@ void EqualizeGreen(Mat &frame)
 
 }
 
-DWORD WINAPI RunPulse( LPVOID lpParam ) 
+int RunPulse() 
 {
 	VideoCapture pulseCam;
 
@@ -190,7 +190,6 @@ DWORD WINAPI RunPulse( LPVOID lpParam )
 			faceLock = !faceLock;
 	}
 	return 0;
-	
 }
 
 
@@ -207,6 +206,15 @@ int _tmain(int argc, _TCHAR* argv[])
 	mag = std::vector<float>(425);
 	std::fill( mag.begin(), mag.end(), 0.0 );
 	
+
+	thread t1(RunPulse);
+	thread t2(RunGraphs);
+
+	t1.join();
+	t2.join();
+
+
+	/*
 	Thread_Handles[0] = CreateThread( NULL, 0, RunPulse, NULL, 0, NULL);
 	Thread_Handles[1] = CreateThread( NULL, 0, RunGraphs, NULL, 0, NULL);
 	
@@ -215,5 +223,5 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	// Close all thread handles upon completion. 
 	CloseHandle(Thread_Handles[0]);	
-	CloseHandle(Thread_Handles[1]);	
+	CloseHandle(Thread_Handles[1]);	*/
 }
