@@ -1,5 +1,6 @@
 Pulse
 =====
+by Michael May (http://maym86.com/) maym86@gmail.com
 
 C++ computer vision pulse detection using OpenCV based on https://github.com/thearn/webcam-pulse-detector. 
 
