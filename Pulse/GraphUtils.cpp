@@ -357,6 +357,8 @@ void showFloatGraph(const char *name, const float *arraySrc, int nArrayLength, i
 		cv::imshow(name, image_graph);
 
 		cv::waitKey(delay_ms);	// Wait longer to make sure the user has seen the graph
+
+		cvReleaseImage(&imageGraph);
 	}
 	catch (cv::Exception e)
 	{

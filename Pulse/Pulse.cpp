@@ -130,7 +130,6 @@ int RunPulse()
 
 			if (face.width > 30)
 			{
-
 				faceFound = true;
 				faceAvg.push_back(face);
 
