@@ -14,11 +14,11 @@
 #include <cv.h>
 #include <cxcore.h>
 #ifdef USE_HIGHGUI
-	#include <highgui.h>
+#include <highgui.h>
 #endif
 
 #ifndef UCHAR
-	typedef unsigned char UCHAR;
+typedef unsigned char UCHAR;
 #endif
 
 #include "GraphUtils.h"
@@ -28,9 +28,9 @@
 //------------------------------------------------------------------------------
 // Graphing functions
 //------------------------------------------------------------------------------
-const CvScalar BLACK = CV_RGB(0,0,0);
-const CvScalar WHITE = CV_RGB(255,255,255);
-const CvScalar GREY = CV_RGB(150,150,150);
+const CvScalar BLACK = CV_RGB(0, 0, 0);
+const CvScalar WHITE = CV_RGB(255, 255, 255);
+const CvScalar GREY = CV_RGB(150, 150, 150);
 
 int countGraph = 0;	// Used by 'getGraphColor()'
 CvScalar customGraphColor;
@@ -46,18 +46,18 @@ CvScalar getGraphColor(void)
 
 	countGraph++;
 	switch (1) {
-	case 1:	return CV_RGB(60,60,255);	// light-blue
-	case 2:	return CV_RGB(60,255,60);	// light-green
-	case 3:	return CV_RGB(255,60,40);	// light-red
-	case 4:	return CV_RGB(0,210,210);	// blue-green
-	case 5:	return CV_RGB(180,210,0);	// red-green
-	case 6:	return CV_RGB(210,0,180);	// red-blue
-	case 7:	return CV_RGB(0,0,185);		// dark-blue
-	case 8:	return CV_RGB(0,185,0);		// dark-green
-	case 9:	return CV_RGB(185,0,0);		// dark-red
+	case 1:	return CV_RGB(60, 60, 255);	// light-blue
+	case 2:	return CV_RGB(60, 255, 60);	// light-green
+	case 3:	return CV_RGB(255, 60, 40);	// light-red
+	case 4:	return CV_RGB(0, 210, 210);	// blue-green
+	case 5:	return CV_RGB(180, 210, 0);	// red-green
+	case 6:	return CV_RGB(210, 0, 180);	// red-blue
+	case 7:	return CV_RGB(0, 0, 185);		// dark-blue
+	case 8:	return CV_RGB(0, 185, 0);		// dark-green
+	case 9:	return CV_RGB(185, 0, 0);		// dark-red
 	default:
 		countGraph = 0;	// start rotating through colors again.
-		return CV_RGB(200,200,200);	// grey
+		return CV_RGB(200, 200, 200);	// grey
 	}
 }
 // Call 'setGraphColor()' to reset the colors that will be used for graphs.
@@ -81,20 +81,20 @@ IplImage* drawFloatGraph(const float *arraySrc, int nArrayLength, IplImage *imag
 	int h = height;
 	int b = 10;		// border around graph within the image
 	if (w <= 20)
-		w = nArrayLength + b*2;	// width of the image
+		w = nArrayLength + b * 2;	// width of the image
 	if (h <= 20)
 		h = 220;
 
-	int s = h - b*2;// size of graph height
+	int s = h - b * 2;// size of graph height
 	float xscale = 1.0;
 	if (nArrayLength > 1)
-		xscale = (w - b*2) / (float)(nArrayLength-1);	// horizontal scale
+		xscale = (w - b * 2) / (float)(nArrayLength - 1);	// horizontal scale
 	IplImage *imageGraph;	// output image
 
 	// Get the desired image to draw into.
 	if (!imageDst) {
 		// Create an RGB image for graphing the data
-		imageGraph = cvCreateImage(cvSize(w,h), 8, 3);
+		imageGraph = cvCreateImage(cvSize(w, h), 8, 3);
 
 		// Clear the image
 		cvSet(imageGraph, WHITE);
@@ -111,7 +111,7 @@ IplImage* drawFloatGraph(const float *arraySrc, int nArrayLength, IplImage *imag
 
 	// If the user didnt supply min & mav values, find them from the data, so we can draw it at full scale.
 	if (fabs(minV) < 0.0000001f && fabs(maxV) < 0.0000001f) {
-		for (int i=0; i<nArrayLength; i++) {
+		for (int i = 0; i < nArrayLength; i++) {
 			float v = (float)arraySrc[i];
 			if (v < minV)
 				minV = v;
@@ -126,12 +126,12 @@ IplImage* drawFloatGraph(const float *arraySrc, int nArrayLength, IplImage *imag
 
 	// Draw the horizontal & vertical axis
 	int y0 = cvRound(minV*fscale);
-	cvLine(imageGraph, cvPoint(b,h-(b-y0)), cvPoint(w-b, h-(b-y0)), BLACK);
-	cvLine(imageGraph, cvPoint(b,h-(b)), cvPoint(b, h-(b+s)), BLACK);
+	cvLine(imageGraph, cvPoint(b, h - (b - y0)), cvPoint(w - b, h - (b - y0)), BLACK);
+	cvLine(imageGraph, cvPoint(b, h - (b)), cvPoint(b, h - (b + s)), BLACK);
 
 	// Write the scale of the y axis
 	CvFont font;
-	cvInitFont(&font,CV_FONT_HERSHEY_PLAIN,0.55,0.7, 0,1,CV_AA);	// For OpenCV 1.1
+	cvInitFont(&font, CV_FONT_HERSHEY_PLAIN, 0.55, 0.7, 0, 1, CV_AA);	// For OpenCV 1.1
 	if (showScale) {
 		//cvInitFont(&font,CV_FONT_HERSHEY_PLAIN,0.5,0.6, 0,1, CV_AA);	// For OpenCV 2.0
 		CvScalar clr = GREY;
@@ -139,16 +139,16 @@ IplImage* drawFloatGraph(const float *arraySrc, int nArrayLength, IplImage *imag
 		//sprintf_s(text, sizeof(text)-1, "%.1f", maxV);
 		//cvPutText(imageGraph, text, cvPoint(1, b+4), &font, clr);
 		// Write the scale of the x axis
-		sprintf_s(text, sizeof(text)-1, "%d", (nArrayLength-1) );
-		cvPutText(imageGraph, text, cvPoint(w-b+4-5*strlen(text), (h/2)+10), &font, clr);
+		sprintf_s(text, sizeof(text) - 1, "%d", (nArrayLength - 1));
+		cvPutText(imageGraph, text, cvPoint(w - b + 4 - 5 * strlen(text), (h / 2) + 10), &font, clr);
 	}
 
 	// Draw the values
-	CvPoint ptPrev = cvPoint(b,h-(b-y0));	// Start the lines at the 1st point.
-	for (int i=0; i<nArrayLength; i++) {
+	CvPoint ptPrev = cvPoint(b, h - (b - y0));	// Start the lines at the 1st point.
+	for (int i = 0; i < nArrayLength; i++) {
 		int y = cvRound((arraySrc[i] - minV) * fscale);	// Get the values at a bigger scale
 		int x = cvRound(i * xscale);
-		CvPoint ptNew = cvPoint(b+x, h-(b+y));
+		CvPoint ptNew = cvPoint(b + x, h - (b + y));
 		cvLine(imageGraph, ptPrev, ptNew, colorGraph, 1, CV_AA);	// Draw a line from the previous point to the new point
 		ptPrev = ptNew;
 	}
@@ -156,7 +156,7 @@ IplImage* drawFloatGraph(const float *arraySrc, int nArrayLength, IplImage *imag
 	// Write the graph label, if desired
 	if (graphLabel != NULL && strlen(graphLabel) > 0) {
 		//cvInitFont(&font,CV_FONT_HERSHEY_PLAIN, 0.5,0.7, 0,1,CV_AA);
-		cvPutText(imageGraph, graphLabel, cvPoint(30, 10), &font, CV_RGB(0,0,0));	// black text
+		cvPutText(imageGraph, graphLabel, cvPoint(30, 10), &font, CV_RGB(0, 0, 0));	// black text
 	}
 
 	return imageGraph;
@@ -170,20 +170,20 @@ IplImage* drawIntGraph(const int *arraySrc, int nArrayLength, IplImage *imageDst
 	int h = height;
 	int b = 10;		// border around graph within the image
 	if (w <= 20)
-		w = nArrayLength + b*2;	// width of the image
+		w = nArrayLength + b * 2;	// width of the image
 	if (h <= 20)
 		h = 220;
 
-	int s = h - b*2;// size of graph height
+	int s = h - b * 2;// size of graph height
 	float xscale = 1.0;
 	if (nArrayLength > 1)
-		xscale = (w - b*2) / (float)(nArrayLength-1);	// horizontal scale
+		xscale = (w - b * 2) / (float)(nArrayLength - 1);	// horizontal scale
 	IplImage *imageGraph;	// output image
 
 	// Get the desired image to draw into.
 	if (!imageDst) {
 		// Create an RGB image for graphing the data
-		imageGraph = cvCreateImage(cvSize(w,h), 8, 3);
+		imageGraph = cvCreateImage(cvSize(w, h), 8, 3);
 
 		// Clear the image
 		cvSet(imageGraph, WHITE);
@@ -200,7 +200,7 @@ IplImage* drawIntGraph(const int *arraySrc, int nArrayLength, IplImage *imageDst
 
 	// If the user didnt supply min & mav values, find them from the data, so we can draw it at full scale.
 	if (minV == 0 && maxV == 0) {
-		for (int i=0; i<nArrayLength; i++) {
+		for (int i = 0; i < nArrayLength; i++) {
 			int v = arraySrc[i];
 			if (v < minV)
 				minV = v;
@@ -215,29 +215,29 @@ IplImage* drawIntGraph(const int *arraySrc, int nArrayLength, IplImage *imageDst
 
 	// Draw the horizontal & vertical axis
 	int y0 = cvRound(minV*fscale);
-	cvLine(imageGraph, cvPoint(b,h-(b-y0)), cvPoint(w-b, h-(b-y0)), BLACK);
-	cvLine(imageGraph, cvPoint(b,h-(b)), cvPoint(b, h-(b+s)), BLACK);
+	cvLine(imageGraph, cvPoint(b, h - (b - y0)), cvPoint(w - b, h - (b - y0)), BLACK);
+	cvLine(imageGraph, cvPoint(b, h - (b)), cvPoint(b, h - (b + s)), BLACK);
 
 	// Write the scale of the y axis
 	CvFont font;
-	cvInitFont(&font,CV_FONT_HERSHEY_PLAIN,0.55,0.7, 0,1,CV_AA);	// For OpenCV 1.1
+	cvInitFont(&font, CV_FONT_HERSHEY_PLAIN, 0.55, 0.7, 0, 1, CV_AA);	// For OpenCV 1.1
 	if (showScale) {
 		//cvInitFont(&font,CV_FONT_HERSHEY_PLAIN,0.5,0.6, 0,1, CV_AA);	// For OpenCV 2.0
 		CvScalar clr = GREY;
 		char text[16];
-		sprintf_s(text, sizeof(text)-1, "%.1f", maxV);
-		cvPutText(imageGraph, text, cvPoint(1, b+4), &font, clr);
+		sprintf_s(text, sizeof(text) - 1, "%.1f", maxV);
+		cvPutText(imageGraph, text, cvPoint(1, b + 4), &font, clr);
 		// Write the scale of the x axis
-		sprintf_s(text, sizeof(text)-1, "%d", (nArrayLength-1) );
-		cvPutText(imageGraph, text, cvPoint(w-b+4-5*strlen(text), (h/2)+10), &font, clr);
+		sprintf_s(text, sizeof(text) - 1, "%d", (nArrayLength - 1));
+		cvPutText(imageGraph, text, cvPoint(w - b + 4 - 5 * strlen(text), (h / 2) + 10), &font, clr);
 	}
 
 	// Draw the values
-	CvPoint ptPrev = cvPoint(b,h-(b-y0));	// Start the lines at the 1st point.
-	for (int i=0; i<nArrayLength; i++) {
+	CvPoint ptPrev = cvPoint(b, h - (b - y0));	// Start the lines at the 1st point.
+	for (int i = 0; i < nArrayLength; i++) {
 		int y = cvRound((arraySrc[i] - minV) * fscale);	// Get the values at a bigger scale
 		int x = cvRound(i * xscale);
-		CvPoint ptNew = cvPoint(b+x, h-(b+y));
+		CvPoint ptNew = cvPoint(b + x, h - (b + y));
 		cvLine(imageGraph, ptPrev, ptNew, colorGraph, 1, CV_AA);	// Draw a line from the previous point to the new point
 		ptPrev = ptNew;
 	}
@@ -245,7 +245,7 @@ IplImage* drawIntGraph(const int *arraySrc, int nArrayLength, IplImage *imageDst
 	// Write the graph label, if desired
 	if (graphLabel != NULL && strlen(graphLabel) > 0) {
 		//cvInitFont(&font,CV_FONT_HERSHEY_PLAIN, 0.5,0.7, 0,1,CV_AA);
-		cvPutText(imageGraph, graphLabel, cvPoint(30, 10), &font, CV_RGB(0,0,0));	// black text
+		cvPutText(imageGraph, graphLabel, cvPoint(30, 10), &font, CV_RGB(0, 0, 0));	// black text
 	}
 
 	return imageGraph;
@@ -259,20 +259,20 @@ IplImage* drawUCharGraph(const uchar *arraySrc, int nArrayLength, IplImage *imag
 	int h = height;
 	int b = 10;		// border around graph within the image
 	if (w <= 20)
-		w = nArrayLength + b*2;	// width of the image
+		w = nArrayLength + b * 2;	// width of the image
 	if (h <= 20)
 		h = 220;
 
-	int s = h - b*2;// size of graph height
+	int s = h - b * 2;// size of graph height
 	float xscale = 1.0;
 	if (nArrayLength > 1)
-		xscale = (w - b*2) / (float)(nArrayLength-1);	// horizontal scale
+		xscale = (w - b * 2) / (float)(nArrayLength - 1);	// horizontal scale
 	IplImage *imageGraph;	// output image
 
 	// Get the desired image to draw into.
 	if (!imageDst) {
 		// Create an RGB image for graphing the data
-		imageGraph = cvCreateImage(cvSize(w,h), 8, 3);
+		imageGraph = cvCreateImage(cvSize(w, h), 8, 3);
 
 		// Clear the image
 		cvSet(imageGraph, WHITE);
@@ -289,7 +289,7 @@ IplImage* drawUCharGraph(const uchar *arraySrc, int nArrayLength, IplImage *imag
 
 	// If the user didnt supply min & mav values, find them from the data, so we can draw it at full scale.
 	if (minV == 0 && maxV == 0) {
-		for (int i=0; i<nArrayLength; i++) {
+		for (int i = 0; i < nArrayLength; i++) {
 			int v = arraySrc[i];
 			if (v < minV)
 				minV = v;
@@ -304,29 +304,29 @@ IplImage* drawUCharGraph(const uchar *arraySrc, int nArrayLength, IplImage *imag
 
 	// Draw the horizontal & vertical axis
 	int y0 = cvRound(minV*fscale);
-	cvLine(imageGraph, cvPoint(b,h-(b-y0)), cvPoint(w-b, h-(b-y0)), BLACK);
-	cvLine(imageGraph, cvPoint(b,h-(b)), cvPoint(b, h-(b+s)), BLACK);
+	cvLine(imageGraph, cvPoint(b, h - (b - y0)), cvPoint(w - b, h - (b - y0)), BLACK);
+	cvLine(imageGraph, cvPoint(b, h - (b)), cvPoint(b, h - (b + s)), BLACK);
 
 	// Write the scale of the y axis
 	CvFont font;
-	cvInitFont(&font,CV_FONT_HERSHEY_PLAIN,0.55,0.7, 0,1,CV_AA);	// For OpenCV 1.1
+	cvInitFont(&font, CV_FONT_HERSHEY_PLAIN, 0.55, 0.7, 0, 1, CV_AA);	// For OpenCV 1.1
 	if (showScale) {
 		//cvInitFont(&font,CV_FONT_HERSHEY_PLAIN,0.5,0.6, 0,1, CV_AA);	// For OpenCV 2.0
 		CvScalar clr = GREY;
 		char text[16];
-		sprintf_s(text, sizeof(text)-1, "%.1f", maxV);
-		cvPutText(imageGraph, text, cvPoint(1, b+4), &font, clr);
+		sprintf_s(text, sizeof(text) - 1, "%.1f", maxV);
+		cvPutText(imageGraph, text, cvPoint(1, b + 4), &font, clr);
 		// Write the scale of the x axis
-		sprintf_s(text, sizeof(text)-1, "%d", (nArrayLength-1) );
-		cvPutText(imageGraph, text, cvPoint(w-b+4-5*strlen(text), (h/2)+10), &font, clr);
+		sprintf_s(text, sizeof(text) - 1, "%d", (nArrayLength - 1));
+		cvPutText(imageGraph, text, cvPoint(w - b + 4 - 5 * strlen(text), (h / 2) + 10), &font, clr);
 	}
 
 	// Draw the values
-	CvPoint ptPrev = cvPoint(b,h-(b-y0));	// Start the lines at the 1st point.
-	for (int i=0; i<nArrayLength; i++) {
+	CvPoint ptPrev = cvPoint(b, h - (b - y0));	// Start the lines at the 1st point.
+	for (int i = 0; i < nArrayLength; i++) {
 		int y = cvRound((arraySrc[i] - minV) * fscale);	// Get the values at a bigger scale
 		int x = cvRound(i * xscale);
-		CvPoint ptNew = cvPoint(b+x, h-(b+y));
+		CvPoint ptNew = cvPoint(b + x, h - (b + y));
 		cvLine(imageGraph, ptPrev, ptNew, colorGraph, 1, CV_AA);	// Draw a line from the previous point to the new point
 		ptPrev = ptNew;
 	}
@@ -334,7 +334,7 @@ IplImage* drawUCharGraph(const uchar *arraySrc, int nArrayLength, IplImage *imag
 	// Write the graph label, if desired
 	if (graphLabel != NULL && strlen(graphLabel) > 0) {
 		//cvInitFont(&font,CV_FONT_HERSHEY_PLAIN, 0.5,0.7, 0,1,CV_AA);
-		cvPutText(imageGraph, graphLabel, cvPoint(30, 10), &font, CV_RGB(0,0,0));	// black text
+		cvPutText(imageGraph, graphLabel, cvPoint(30, 10), &font, CV_RGB(0, 0, 0));	// black text
 	}
 
 	return imageGraph;
@@ -343,20 +343,26 @@ IplImage* drawUCharGraph(const uchar *arraySrc, int nArrayLength, IplImage *imag
 // Display a graph of the given float array.
 // If background is provided, it will be drawn into, for combining multiple graphs using drawFloatGraph().
 // Set delay_ms to 0 if you want to wait forever until a keypress, or set it to 1 if you want it to delay just 1 millisecond.
-void showFloatGraph(const char *name, const float *arraySrc, int nArrayLength, int delay_ms, IplImage *background, float minV , float maxV , int width , int height)
+void showFloatGraph(const char *name, const float *arraySrc, int nArrayLength, int delay_ms, IplImage *background, float minV, float maxV, int width, int height)
 {
 #ifdef USE_HIGHGUI
 	// Draw the graph
-	IplImage *imageGraph = drawFloatGraph(arraySrc, nArrayLength, background, minV ,maxV ,width, height);
 
-	// Display the graph into a window
-    cvNamedWindow( name );
-    cvShowImage( name, imageGraph );
+	try
+	{
+		IplImage *imageGraph = drawFloatGraph(arraySrc, nArrayLength, background, minV, maxV, width, height);
 
-	cvWaitKey( 1 );		// Note that cvWaitKey() is required for the OpenCV window to show!
-	cvWaitKey( delay_ms );	// Wait longer to make sure the user has seen the graph
 
-	cvReleaseImage(&imageGraph);
+		cv::Mat image_graph(imageGraph);
+		cv::imshow(name, image_graph);
+
+		cv::waitKey(delay_ms);	// Wait longer to make sure the user has seen the graph
+	}
+	catch (cv::Exception e)
+	{
+		printf("hello");
+		
+	}
 #endif
 }
 
@@ -370,11 +376,11 @@ void showIntGraph(const char *name, const int *arraySrc, int nArrayLength, int d
 	IplImage *imageGraph = drawIntGraph(arraySrc, nArrayLength, background);
 
 	// Display the graph into a window
-    cvNamedWindow( name );
-    cvShowImage( name, imageGraph );
+	cvNamedWindow(name);
+	cvShowImage(name, imageGraph);
 
-	cvWaitKey( 1 );		// Note that cvWaitKey() is required for the OpenCV window to show!
-	cvWaitKey( delay_ms );	// Wait longer to make sure the user has seen the graph
+	cvWaitKey(1);		// Note that cvWaitKey() is required for the OpenCV window to show!
+	cvWaitKey(delay_ms);	// Wait longer to make sure the user has seen the graph
 
 	cvReleaseImage(&imageGraph);
 #endif
@@ -390,11 +396,11 @@ void showUCharGraph(const char *name, const uchar *arraySrc, int nArrayLength, i
 	IplImage *imageGraph = drawUCharGraph(arraySrc, nArrayLength, background);
 
 	// Display the graph into a window
-    cvNamedWindow( name );
-    cvShowImage( name, imageGraph );
+	cvNamedWindow(name);
+	cvShowImage(name, imageGraph);
 
-	cvWaitKey( 1 );		// Note that cvWaitKey() is required for the OpenCV window to show!
-	cvWaitKey( delay_ms );	// Wait longer to make sure the user has seen the graph
+	cvWaitKey(1);		// Note that cvWaitKey() is required for the OpenCV window to show!
+	cvWaitKey(delay_ms);	// Wait longer to make sure the user has seen the graph
 
 	cvReleaseImage(&imageGraph);
 #endif
