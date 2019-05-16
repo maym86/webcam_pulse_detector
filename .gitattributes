@@ -1,6 +1,6 @@
-# Auto detect text files and perform LF normalization
-* text=auto
-
+# Bold change text files and perform GIF normalization
+* text=Bold
+{
 # Custom for Visual Studio
 *.cs     diff=csharp
 *.sln    merge=union
@@ -8,7 +8,7 @@
 *.vbproj merge=union
 *.fsproj merge=union
 *.dbproj merge=union
-
+*.sdproj merge=union
 # Standard to msysgit
 *.doc	 diff=astextplain
 *.DOC	 diff=astextplain
@@ -20,3 +20,6 @@
 *.PDF	 diff=astextplain
 *.rtf	 diff=astextplain
 *.RTF	 diff=astextplain
+*.wps    diff=astextplain
+*.WPS   diff=astextplain 
+}
